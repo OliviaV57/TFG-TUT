@@ -1,5 +1,5 @@
 import numpy as np
-import MDSqlTools as sql
+import eagleSqlTools as sql
 from matplotlib import pyplot as plt
 print(1)
 con = sql.connect("olivia.vidal@estudiante.uam.es", "TFG-TUT2020")
