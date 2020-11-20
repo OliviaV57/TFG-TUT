@@ -8,8 +8,8 @@ the_query = """SELECT snapnum, MstarSpheroid FROM MDPL2.Galacticus
             WHERE redshift = 0 
             LIMIT 10"""
 print(3)
-data = con.execute_query(the_query)
+data = sql.execute_query(con,the_query)
 print(4)
-print (type (data))
+print (type(data))
 
 print ("Compila")
