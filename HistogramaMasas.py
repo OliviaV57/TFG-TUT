@@ -42,6 +42,7 @@ hoja = wb.sheet_by_index(0)  # Variable que elige la hoja en la que trabajamos, 
 import openpyxl
 import math
 import numpy as np
+import matplotlib.pyplot as plt
 
 wb = openpyxl.load_workbook("Mass_total_Galacticus.xlsx") #Abre mi excel
 file = wb["Mass_total_Galacticus"] # Lee la hoja que quiero que lea de mi excel. En este caso se llaman igual. Sheet 1.
@@ -58,10 +59,13 @@ for row in file.iter_rows(min_row = 2): #Cojo solo la columna 2. La C en mi exce
 Mass = sorted(Masas) #Variable con mis masas ordenadas de menor a mayor.
 print(Mass)
 
+'''
 #Creo un diccionario que me dice cuantos elementos hay de cada masa en mi lista:
 from collections import Counter
 counted = Counter(Mass)
 # print(counted) #solo hay una de cada, normal. No importa, las voy a contar por intervalos.
+'''
+
 
 
 '''hist, bin_edges = np.histogram(Mass) # Por defecto utiliza 10 bins del mismo tamaño y te devuelve un tuple (lista de
@@ -72,6 +76,7 @@ print(bin_edges)
 # print(hist.size)
 # print(bin_edges.size)'''
 
+'''LIMITES DE LOS BINES UTILIZANDO LINSPACE:
 #Se pueden hacer los limites de los bines manualmente también:
 
 first_edge, last_edge = Mass[0], Mass[-1] #Como mi lista de masas está ordenada, cojo la primera masa como límite
@@ -84,22 +89,60 @@ bin_edges = np.linspace(start = first_edge,stop = last_edge,
 # Returns num evenly spaced samples calculated over the interval [start, stop]
 # num = 10+1 porque queremos 10 intervalos, por lo que necesitamos 11 límites.
 # The endpoint of the interval can optionally be excluded.
-print(bin_edges)
+print(bin_edges)'''
 
-'''Pequeñp cálculo de nuestro intervalo a mano:
+'''PEQUEÑO CÁLCULO DE NUESTRO INTERVALO A MANO:
 Dif = Mass[-1]-Mass[0]
 interval = Dif/10
 edge2 = Mass[0] + interval
 print(interval)
 Con un bucle se podría hacer de esta manera también y así no utilizar linspace:
 '''
+
+#Cálculo de los edges realmente a mano:
+
 Diff = Mass[-1] - Mass[0]
 n = 10
-interval = Diff/n
+bin = Diff/n
+edges = []
 edge = Mass[0]
-for ibin in range(len(Mass)):
-   edge =  edge + interval
+edges.append(edge)
+
+edge1 = edge + bin
+edge2 = edge1 + bin
+
+while edge <= Mass[-2]: #Mientras mi límite sea menor o igual que mi penúltima masa realiza la suma. Si cogiera la
+   # última masa, al ser el último límite correspondiente a ella, me haría la suma una vez más. He intentado poner
+   # simplemente menor que la última masa y debería funcionar así, pero pienso que al jugar con tantos decimales
+   # mis divisiones no son exactas.
+   '''PREGUNTAR A VIOLETA'''
+   edge += bin
+   edges.append(edge)
+
+#print(edges)
+
+# Ahora estaría bien contar cuántas galaxias hay en cada bin:
+
+bcounts = np.bincount(Mass)
+conteo = dict(zip(np.unique(Mass), bcounts[bcounts.nonzero()]))
+print(conteo)
+
+# ¿Podría intentar contar haciendo bucles, de forma más manual?
+'''PREGUNTAR A VIOLETA SI LO INTENTO'''
 
 
 
+'''HISTOGRAMA'''
+m, bins, patches = plt.hist(x = Mass, bins = 'auto', alpha=1, rwidth = 0.9) #alfa es la opacidad y rwidth es el ancho
+# de mis barras
+# plt.grid(axis = 'y', alpha = 0.75)
+plt.xlabel('Masas')
+plt.ylabel('Frecuencia')
+plt.title('Masas Galacticus')
 
+plt.savefig('histo_Galacticus.png') #Guarda la imagen directamente en la carpeta del proyecto.
+plt.show()
+
+'''Desde que he añadido el histograma el programa tarda mucho en compilar, me hace el plot rápido pero luego sigue 
+trabajando, no sé por qué. Hacer verificaciones. El problema es plt.show, tarda mucho tiempo -----> Deja de runear 
+cuando cierras el plot.'''
