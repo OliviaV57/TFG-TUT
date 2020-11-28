@@ -39,25 +39,48 @@ hoja = wb.sheet_by_index(0)  # Variable que elige la hoja en la que trabajamos, 
 ##########################################################
 
 '''PARA HACERLO CON OPENPYXL'''
-import openpyxl
+#import openpyxl
 import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-wb = openpyxl.load_workbook("Mass_total_Galacticus.xlsx") #Abre mi excel
-file = wb["Mass_total_Galacticus"] # Lee la hoja que quiero que lea de mi excel. En este caso se llaman igual. Sheet 1.
+#wb = openpyxl.load_workbook("Mass_total_Galacticus.xlsx") #Abre mi excel
+#file = wb["Mass_total_Galacticus"] # Lee la hoja que quiero que lea de mi excel. En este caso se llaman igual. Sheet 1.
+
+'''PARA HACERLO CON NUMPY'''
+
+data = np.loadtxt('Mass_total_galacticus.csv', dtype=str,  unpack=True)
+
+# o para leer la columnas 0 y 2:
+# col0, col2 = np.loadtxt(Mass_total_galacticus, usecols=(0,2), unpack=True)
+
+# para separadores que son comas:
+M = np.loadtxt('Mass_total_galacticus.csv', skiprows=1, usecols=(2), unpack=True, delimiter=',')
+Masas = np.log10(M)
+#Esto ya te hace un array, es maravilloso creo.
+#Mi columna 2 son mis masas.
+
+print(Masas)
+
+
+'''
 
 Masas=[] #Creo una lista vacía que voy a ir rellenando
 for row in file.iter_rows(min_row = 2): #Cojo solo la columna 2. La C en mi excel.
    m = row[2].value # Cojo los valores de la columna 2 y los meto en una variable. Identifica donde hay valores.
    logm = math.log(m) #Hago el logaritmo de cada uno de mis valores
    Masas.append(logm) #Hago de esa variable una lista y la pongo en mi lista vacía.
+#Unidades Msun/h
 
-# print (Masas) # Me imprime mi lista de masas!!
+# print (Masas) # Me imprime mi lista de masas!!'''
+
+
 
 # Ordeno mis masas:
 Mass = sorted(Masas) #Variable con mis masas ordenadas de menor a mayor.
 print(Mass)
+
+
 
 '''
 #Creo un diccionario que me dice cuantos elementos hay de cada masa en mi lista:
@@ -99,49 +122,56 @@ print(interval)
 Con un bucle se podría hacer de esta manera también y así no utilizar linspace:
 '''
 
+
+'''
 #Cálculo de los edges realmente a mano:
 
 Diff = Mass[-1] - Mass[0]
 n = 10
 bin = Diff/n
 edges = []
-edge = Mass[0]
-edges.append(edge)
+edge = 0
+
 
 edge1 = edge + bin
 edge2 = edge1 + bin
 
-while edge <= Mass[-2]: #Mientras mi límite sea menor o igual que mi penúltima masa realiza la suma. Si cogiera la
+while edge <= Mass[-1]: #Mientras mi límite sea menor o igual que mi penúltima masa realiza la suma. Si cogiera la
    # última masa, al ser el último límite correspondiente a ella, me haría la suma una vez más. He intentado poner
    # simplemente menor que la última masa y debería funcionar así, pero pienso que al jugar con tantos decimales
    # mis divisiones no son exactas.
-   '''PREGUNTAR A VIOLETA'''
+   
    edge += bin
    edges.append(edge)
+   print(edge)
 
-#print(edges)
+print(edges)
 
 # Ahora estaría bien contar cuántas galaxias hay en cada bin:
 
 bcounts = np.bincount(Mass)
 conteo = dict(zip(np.unique(Mass), bcounts[bcounts.nonzero()]))
 print(conteo)
-
-# ¿Podría intentar contar haciendo bucles, de forma más manual?
-'''PREGUNTAR A VIOLETA SI LO INTENTO'''
+'''
+# Podría intentar contar haciendo bucles, de forma más manual
+'''ME FALTA INTENTARLO'''
 
 
 
 '''HISTOGRAMA'''
+
+
 m, bins, patches = plt.hist(x = Mass, bins = 'auto', alpha=1, rwidth = 0.9) #alfa es la opacidad y rwidth es el ancho
 # de mis barras
 # plt.grid(axis = 'y', alpha = 0.75)
-plt.xlabel('Masas')
+plt.xlabel('Log10(masas) [Msol h-1]')
 plt.ylabel('Frecuencia')
 plt.title('Masas Galacticus')
 
 plt.savefig('histo_Galacticus.png') #Guarda la imagen directamente en la carpeta del proyecto.
 plt.show()
+
+
 
 '''Desde que he añadido el histograma el programa tarda mucho en compilar, me hace el plot rápido pero luego sigue 
 trabajando, no sé por qué. Hacer verificaciones. El problema es plt.show, tarda mucho tiempo -----> Deja de runear 
