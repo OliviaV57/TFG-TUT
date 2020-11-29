@@ -41,26 +41,28 @@ hoja = wb.sheet_by_index(0)  # Variable que elige la hoja en la que trabajamos, 
 '''PARA HACERLO CON OPENPYXL'''
 #import openpyxl
 import math
+
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
 #wb = openpyxl.load_workbook("Mass_total_Galacticus.xlsx") #Abre mi excel
 #file = wb["Mass_total_Galacticus"] # Lee la hoja que quiero que lea de mi excel. En este caso se llaman igual. Sheet 1.
 
 '''PARA HACERLO CON NUMPY'''
 
-data = np.loadtxt('Mass_total_galacticus.csv', dtype=str,  unpack=True)
+data = np.loadtxt('Mass_total_galacticus.csv', dtype=str,  unpack=True) #dtype str para poder leer palabras también.
 
 # o para leer la columnas 0 y 2:
 # col0, col2 = np.loadtxt(Mass_total_galacticus, usecols=(0,2), unpack=True)
 
 # para separadores que son comas:
 M = np.loadtxt('Mass_total_galacticus.csv', skiprows=1, usecols=(2), unpack=True, delimiter=',')
-Masas = np.log10(M)
+Masas = np.log10(M) #Esto puede hacerlo el histograma directamente también.
 #Esto ya te hace un array, es maravilloso creo.
 #Mi columna 2 son mis masas.
 
-print(Masas)
+# print(Masas)
 
 
 '''
@@ -146,10 +148,51 @@ while edge <= Mass[-1]: #Mientras mi límite sea menor o igual que mi penúltima
    print(edge)
 
 print(edges)
+'''
 
+'''CÁLCULO DE LOS EDGES CON LO QUE ME DA VIOLETA'''
+
+gmin = Mass[0]
+gmax = Mass[-1]
+dex = 0.2
+gedges = np.array(np.arange(gmin, gmax + dex, dex)) #start, stop (no entiendo por qué terminamos en un bin más que mi
+# última masa), step. np.array es para crear un array con esto.
+ghist = gedges[1:] - 0.5 * dex # centros de los intervalos, ¿para qué?
+# gedges desde el segundo (1) hasta el último, para generar un array, menos la mitad del bin.
+
+print(len(gedges))
+print(len(ghist))
+ftot = np.full((len(ghist)),0.) #genera un array de la longitud de ghist lleno de 0.
+#Va a ser mi vector de frecuencias, con la misma longitud que ghist, está inicializado en 0.
+
+''' Para hacer varios vectores de 0 a la vez:
+ntot, pftot, pfcen, pfsat, pfres  = [np.full((len(ghist)),0.) for i in range(5)] '''
+
+# Ahora hacemos el histograma, que cuenta las ocurrencias de masas en los intervalos gedges
+
+freq, bins_edges = np.histogram(Mass, bins=gedges)
+print(freq)
+
+#cambio de unidades del eje y:
+freq = freq/10**5
+ftot = ftot + np.log10(freq, where=0<freq) # El where es para que no haga los logaritmos de 0 sino que lo deje como 0.
+
+print(len(ftot))
+print(len(bins_edges))
+#plt.plot(bins_edges, ftot)
+#show()
+print(freq)
+print(ftot)
+print(bins_edges)
+'''
+m, bins, patches = plt.hist(x = Mass, bins = bins_edges, alpha=1, rwidth = 0.9)
+plt.show()
+
+'''
+'''
 # Ahora estaría bien contar cuántas galaxias hay en cada bin:
 
-bcounts = np.bincount(Mass)
+bcounts = np.bincount(Mass, minlength=30) #no sé
 conteo = dict(zip(np.unique(Mass), bcounts[bcounts.nonzero()]))
 print(conteo)
 '''
@@ -160,6 +203,7 @@ print(conteo)
 
 '''HISTOGRAMA'''
 
+'''
 
 m, bins, patches = plt.hist(x = Mass, bins = 'auto', alpha=1, rwidth = 0.9) #alfa es la opacidad y rwidth es el ancho
 # de mis barras
@@ -171,7 +215,7 @@ plt.title('Masas Galacticus')
 plt.savefig('histo_Galacticus.png') #Guarda la imagen directamente en la carpeta del proyecto.
 plt.show()
 
-
+'''
 
 '''Desde que he añadido el histograma el programa tarda mucho en compilar, me hace el plot rápido pero luego sigue 
 trabajando, no sé por qué. Hacer verificaciones. El problema es plt.show, tarda mucho tiempo -----> Deja de runear 
