@@ -62,7 +62,7 @@ Masas = np.log10(M) #Esto puede hacerlo el histograma directamente también.
 #Esto ya te hace un array, es maravilloso creo.
 #Mi columna 2 son mis masas.
 
-# print(Masas)
+print(Masas)
 
 
 '''
@@ -77,10 +77,11 @@ for row in file.iter_rows(min_row = 2): #Cojo solo la columna 2. La C en mi exce
 # print (Masas) # Me imprime mi lista de masas!!'''
 
 
+'''Si al final utilizo la función histogram. no hace falta ordenar las masas.'''
 
-# Ordeno mis masas:
+'''# Ordeno mis masas:
 Mass = sorted(Masas) #Variable con mis masas ordenadas de menor a mayor.
-print(Mass)
+print(Mass)'''
 
 
 
@@ -152,9 +153,9 @@ print(edges)
 
 '''CÁLCULO DE LOS EDGES CON LO QUE ME DA VIOLETA'''
 
-gmin = Mass[0]
-gmax = Mass[-1]
-dex = 0.2
+gmin = np.amin(Masas)
+gmax = np.amax(Masas)
+dex = 0.3
 gedges = np.array(np.arange(gmin, gmax + dex, dex)) #start, stop (no entiendo por qué terminamos en un bin más que mi
 # última masa), step. np.array es para crear un array con esto.
 ghist = gedges[1:] - 0.5 * dex # centros de los intervalos, ¿para qué?
@@ -168,22 +169,20 @@ ftot = np.full((len(ghist)),0.) #genera un array de la longitud de ghist lleno d
 ''' Para hacer varios vectores de 0 a la vez:
 ntot, pftot, pfcen, pfsat, pfres  = [np.full((len(ghist)),0.) for i in range(5)] '''
 
-# Ahora hacemos el histograma, que cuenta las ocurrencias de masas en los intervalos gedges
+# Ahora utilizamos la función histogram, que cuenta las ocurrencias de masas en los intervalos gedges
 
-freq, bins_edges = np.histogram(Mass, bins=gedges)
+freq, bins_edges = np.histogram(Masas, bins=gedges)
 print(freq)
 
 #cambio de unidades del eje y:
-freq = freq/10**5
+freq = freq/10**9
 ftot = ftot + np.log10(freq, where=0<freq) # El where es para que no haga los logaritmos de 0 sino que lo deje como 0.
 
 print(len(ftot))
-print(len(bins_edges))
-#plt.plot(bins_edges, ftot)
-#show()
-print(freq)
-print(ftot)
-print(bins_edges)
+print(len(ghist)) #Hay que hacerlo con los centros de los edges, porque es ahí donde va a ponerse el valor.
+plt.plot(ghist, ftot)
+plt.show()
+
 '''
 m, bins, patches = plt.hist(x = Mass, bins = bins_edges, alpha=1, rwidth = 0.9)
 plt.show()
