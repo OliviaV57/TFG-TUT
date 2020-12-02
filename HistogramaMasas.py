@@ -49,6 +49,9 @@ import sys
 #wb = openpyxl.load_workbook("Mass_total_Galacticus.xlsx") #Abre mi excel
 #file = wb["Mass_total_Galacticus"] # Lee la hoja que quiero que lea de mi excel. En este caso se llaman igual. Sheet 1.
 
+'''Parámetros de la simulación'''
+volumen = 1000**3 #(Mpc/h)^3
+
 '''PARA HACERLO CON NUMPY'''
 
 data = np.loadtxt('Mass_total_galacticus.csv', dtype=str,  unpack=True) #dtype str para poder leer palabras también.
@@ -58,9 +61,11 @@ data = np.loadtxt('Mass_total_galacticus.csv', dtype=str,  unpack=True) #dtype s
 
 # para separadores que son comas:
 M = np.loadtxt('Mass_total_galacticus.csv', skiprows=1, usecols=(2), unpack=True, delimiter=',')
-Masas = np.log10(M) #Esto puede hacerlo el histograma directamente también.
+Masas = np.log10(M) #Esto puede hacerlo el histograma directamente también, creo.
 #Esto ya te hace un array, es maravilloso creo.
 #Mi columna 2 son mis masas.
+
+
 
 print(Masas)
 
@@ -153,17 +158,25 @@ print(edges)
 
 '''CÁLCULO DE LOS EDGES CON LO QUE ME DA VIOLETA'''
 
-gmin = np.amin(Masas)
-gmax = np.amax(Masas)
+#gmin = np.amin(Masas)
+#gmax = np.amax(Masas)
+
+gmin = 8
+gmax = 14
+
+print(gmin, gmax)
+
 dex = 0.3
 gedges = np.array(np.arange(gmin, gmax + dex, dex)) #start, stop (no entiendo por qué terminamos en un bin más que mi
-# última masa), step. np.array es para crear un array con esto.
-ghist = gedges[1:] - 0.5 * dex # centros de los intervalos, ¿para qué?
+# última masa: porque así hago el intervalo, si no hay nada no lo va a contar.), step. np.array es para
+# crear un array con esto.
+ghist = gedges[1:] - 0.5 * dex # centros de los intervalos, ¿para qué?, es ahí donde voy a pintar los puntos de
+#frecuencias de los intervalos.
 # gedges desde el segundo (1) hasta el último, para generar un array, menos la mitad del bin.
 
-print(len(gedges))
+print('gedges = {}'.format(gedges))
 print(len(ghist))
-ftot = np.full((len(ghist)),0.) #genera un array de la longitud de ghist lleno de 0.
+# ftot = np.full((len(ghist)),0.) #genera un array de la longitud de ghist lleno de 0.
 #Va a ser mi vector de frecuencias, con la misma longitud que ghist, está inicializado en 0.
 
 ''' Para hacer varios vectores de 0 a la vez:
@@ -172,15 +185,25 @@ ntot, pftot, pfcen, pfsat, pfres  = [np.full((len(ghist)),0.) for i in range(5)]
 # Ahora utilizamos la función histogram, que cuenta las ocurrencias de masas en los intervalos gedges
 
 freq, bins_edges = np.histogram(Masas, bins=gedges)
-print(freq)
+# print('freq={} '.format(len(freq)))
+
 
 #cambio de unidades del eje y:
-freq = freq/10**9
-ftot = ftot + np.log10(freq, where=0<freq) # El where es para que no haga los logaritmos de 0 sino que lo deje como 0.
+freq = freq/(dex * volumen)
+# ind = np.where(freq>0.)
+ftot = np.log10(freq, where = 0<freq) # El where es para que no haga los logaritmos de 0 sino que lo deje como 0.
+
+print(ftot)
 
 print(len(ftot))
 print(len(ghist)) #Hay que hacerlo con los centros de los edges, porque es ahí donde va a ponerse el valor.
-plt.plot(ghist, ftot)
+
+plt.xlabel('$Log_{10} \; $(M $[M_{\odot} \; h^{-1}$])')
+plt.ylabel('$Log_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
+plt.title('Histograma Masas Galacticus')
+
+
+plt.plot(ghist[ftot<0], ftot[ftot<0])
 plt.show()
 
 '''
