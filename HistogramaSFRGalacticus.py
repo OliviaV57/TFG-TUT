@@ -5,10 +5,10 @@ import sys
 '''Parámetros de la simulación'''
 volumen = 1000**3 #(Mpc/h)^3
 
-data = np.loadtxt('Mass_total_galacticus.csv', dtype=str,  unpack=True) #dtype str para poder leer palabras también.
+data = np.loadtxt('SFR_Galacticus_10000.csv', dtype=str,  unpack=True) #dtype str para poder leer palabras también.
 StarFR = np.loadtxt('SFR_Galacticus_10000.csv', skiprows=1, usecols=(2), unpack=True, delimiter=',')
-SFR = StarFR / (10**9)
-SFRl = np.log10(SFR)
+SFR = StarFR / (10**9) #Msun h^-1 yr^-1
+SFRl = np.log10(SFR) #log(Msun h^-1 yr^-1)
 # print('logaritmo SFR = {}'.format(SFRl))
 
 # print('SFR = {}'.format(SFR))
@@ -37,7 +37,7 @@ ftot = np.log10(freq, where = 0<freq) # El where deja como 0 donde hay 0, no hac
 
 print('frecuencias = {}'.format(ftot))
 
-plt.xlabel('$Log_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; Gyr^{-1}$])')
+plt.xlabel('$Log_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
 plt.ylabel('$Log_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
 plt.title('Histograma SFR Galacticus')
 
