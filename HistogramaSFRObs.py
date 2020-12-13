@@ -27,15 +27,15 @@ error = np.loadtxt(file, skiprows=4, usecols=(3), unpack=True) - 3 * np.log10(ho
 #print(error)
 
 
-StarFR_low2 = np.loadtxt(file2, skiprows=4, usecols=(0), unpack=True) + np.log10(1/h)
-StarFR_high2 = np.loadtxt(file2, skiprows=4, usecols=(1), unpack=True) + np.log10(1/h)
-freq2 = np.loadtxt(file2, skiprows=4, usecols=(2), unpack=True) + np.log10((volumen**2)*(1/h**3))
-error2 = np.loadtxt(file2, skiprows=4, usecols=(3), unpack=True) #+ np.log10((volumen**2)*(1/h**3))
+StarFR_low2 = np.loadtxt(file2, skiprows=4, usecols=(0), unpack=True) + np.log10(1/hobs)
+StarFR_high2 = np.loadtxt(file2, skiprows=4, usecols=(1), unpack=True) + np.log10(1/hobs)
+freq2 = np.loadtxt(file2, skiprows=4, usecols=(2), unpack=True) - 3 * np.log10(hobs)
+error2 = np.loadtxt(file2, skiprows=4, usecols=(3), unpack=True) - 3 * np.log10(hobs)
 
-StarFR_low3 = np.loadtxt(file3, skiprows=4, usecols=(0), unpack=True) + np.log10(1/h)
-StarFR_high3 = np.loadtxt(file3, skiprows=4, usecols=(1), unpack=True) + np.log10(1/h)
-freq3 = np.loadtxt(file3, skiprows=4, usecols=(2), unpack=True) + np.log10((volumen**2)*(1/h**3))
-error3 = np.loadtxt(file3, skiprows=4, usecols=(3), unpack=True) #+ np.log10((volumen**2)*(1/h**3))
+StarFR_low3 = np.loadtxt(file3, skiprows=4, usecols=(0), unpack=True) + np.log10(1/hobs)
+StarFR_high3 = np.loadtxt(file3, skiprows=4, usecols=(1), unpack=True) + np.log10(1/hobs)
+freq3 = np.loadtxt(file3, skiprows=4, usecols=(2), unpack=True) - 3 * np.log10(hobs)
+error3 = np.loadtxt(file3, skiprows=4, usecols=(3), unpack=True) - 3 * np.log10(hobs)
 
 
 # dex = 0.1
@@ -67,6 +67,9 @@ plt.plot(ghist, freq, 'b', label = '0.0< z < 0.3')
 plt.plot(ghist2, freq2, 'r', label = '0.3< z < 0.45')
 plt.plot(ghist3, freq3, 'g', label = '0.45< z < 0.6')
 #plt.legend('0.0< z < 0.3', '0.3< z < 0.45', '0.45 < z < 0.6')
+plt.errorbar(ghist, freq, yerr=error, xerr=None, fmt = '.b')
+plt.errorbar(ghist2, freq2, yerr=error2, xerr=None, fmt = '.r')
+plt.errorbar(ghist3, freq3, yerr=error3, xerr=None, fmt = '.g')
 plt.legend()
-#plt.savefig('histo_SFR_Galacticus.png')
+plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/histo_SFR_OBS_3z.png')
 plt.show()

@@ -4,20 +4,23 @@ import sys
 
 '''Parámetros de la simulación'''
 volumen = 1000**3 #(Mpc/h)^3
+file1 = 'C:/Users/Olivia/TFG-TUT/Datos_simulaciones/SFR_Galacticus_z1.csv'
+file2 = 'C:/Users/Olivia/TFG-TUT/Datos_simulaciones/SFR_Galacticus_z2.csv'
+file3 = 'C:/Users/Olivia/TFG-TUT/Datos_simulaciones/SFR_Galacticus_z3.csv'
 
-data1 = np.loadtxt('SFR_Galacticus_z1.csv', dtype=str,  unpack=True) #dtype str para poder leer palabras también.
-StarFR1 = np.loadtxt('SFR_Galacticus_z1.csv', skiprows=1, usecols=(2), unpack=True, delimiter=',')
+data1 = np.loadtxt(file1, dtype=str,  unpack=True) #dtype str para poder leer palabras también.
+StarFR1 = np.loadtxt(file1, skiprows=1, usecols=(2), unpack=True, delimiter=',')
 SFR1 = StarFR1 / (10**9) #Msun h^-1 yr^-1
 SFRl1 = np.log10(SFR1) #log(Msun h^-1 yr^-1)
 # print('logaritmo SFR = {}'.format(SFRl))
 
-data2 = np.loadtxt('SFR_Galacticus_z2.csv', dtype=str,  unpack=True) #dtype str para poder leer palabras también.
-StarFR2 = np.loadtxt('SFR_Galacticus_z2.csv', skiprows=1, usecols=(2), unpack=True, delimiter=',')
+data2 = np.loadtxt(file2, dtype=str,  unpack=True) #dtype str para poder leer palabras también.
+StarFR2 = np.loadtxt(file2, skiprows=1, usecols=(2), unpack=True, delimiter=',')
 SFR2 = StarFR2 / (10**9) #Msun h^-1 yr^-1
 SFRl2 = np.log10(SFR2) #log(Msun h^-1 yr^-1)
 
-data3 = np.loadtxt('SFR_Galacticus_z3.csv', dtype=str,  unpack=True) #dtype str para poder leer palabras también.
-StarFR3 = np.loadtxt('SFR_Galacticus_z3.csv', skiprows=1, usecols=(2), unpack=True, delimiter=',')
+data3 = np.loadtxt(file3, dtype=str,  unpack=True) #dtype str para poder leer palabras también.
+StarFR3 = np.loadtxt(file3, skiprows=1, usecols=(2), unpack=True, delimiter=',')
 SFR3 = StarFR3 / (10**9) #Msun h^-1 yr^-1
 SFRl3 = np.log10(SFR3) #log(Msun h^-1 yr^-1)
 
@@ -71,5 +74,5 @@ plt.plot(ghist[ind2], ftot2[ind2], 'r', label='0.3<z<0.45')
 plt.plot(ghist[ind3], ftot3[ind3], 'g', label='0.45<z<0.6')
 
 plt.legend()
-# plt.savefig('histo_SFR_Galacticus.png')
+plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/histo_SFR_Galacticus_3z.png')
 plt.show()
