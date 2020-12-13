@@ -4,7 +4,10 @@ import sys
 
 '''Parámetros de la simulación'''
 volumen = 1000**3 #(Mpc/h)^3 #No estoy segura de que este sea el volumen, en el paper no lo encuentro
-h = 0.71
+
+'''Parámetros de las observación'''
+hobs = 0.71
+
 file = 'C:/Users/Olivia/TFG-TUT/Obs_Data/sfrf/gruppioni_2015_z0.0-0.3_cha.txt'
 file2 = 'C:/Users/Olivia/TFG-TUT/Obs_Data/sfrf/gruppioni_2015_z0.3-0.45_cha.txt'
 file3 = 'C:/Users/Olivia/TFG-TUT/Obs_Data/sfrf/gruppioni_2015_z0.45-0.6_cha.txt'
@@ -13,15 +16,16 @@ data = np.loadtxt(file, dtype=str,  unpack=True) #dtype str para poder leer pala
 data1 = np.loadtxt(file2, dtype=str,  unpack=True)
 data2 = np.loadtxt(file3, dtype=str,  unpack=True)
 
-StarFR_low = np.loadtxt(file, skiprows=4, usecols=(0), unpack=True) + np.log10(1/h)
-StarFR_high = np.loadtxt(file, skiprows=4, usecols=(1), unpack=True) + np.log10(1/h)
-freq = np.loadtxt(file, skiprows=4, usecols=(2), unpack=True) + np.log10((volumen**2)*(1/h**3))
-error = np.loadtxt(file, skiprows=4, usecols=(3), unpack=True) #+ np.log10((volumen**2)*(1/h**3))
+StarFR_low = np.loadtxt(file, usecols=(0), unpack=True) + np.log10(hobs) #log(Msun yr^-1 h^-1)
+StarFR_high = np.loadtxt(file, skiprows=4, usecols=(1), unpack=True) + np.log10(hobs) # si es # entiende qu elo salta
+freq = np.loadtxt(file, skiprows=4, usecols=(2), unpack=True) - 3 * np.log10(hobs)
+error = np.loadtxt(file, skiprows=4, usecols=(3), unpack=True) - 3 * np.log10(hobs)
 
 #print(StarFR_low)
 #print(StarFR_high)
 #print(freq)
 #print(error)
+
 
 StarFR_low2 = np.loadtxt(file2, skiprows=4, usecols=(0), unpack=True) + np.log10(1/h)
 StarFR_high2 = np.loadtxt(file2, skiprows=4, usecols=(1), unpack=True) + np.log10(1/h)
