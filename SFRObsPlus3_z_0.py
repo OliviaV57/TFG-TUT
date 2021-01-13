@@ -29,6 +29,13 @@ SFRSage = StarFRSage - 9 #* np.log10(10) = 1 #Msun h^-1 yr^-1
 #print(StarFRSage)
 #print('frecuencias = {}'.format(SFRSage))
 
+fileSag = 'C:/Users/Olivia/TFG-TUT/Datos_simulaciones/histograma_Sag_z_0_cortes.csv'
+dataSag = np.loadtxt(fileSag, dtype=str, unpack=True) #dtype str para poder leer palabras también.
+StarFRSag = np.loadtxt(fileSag, skiprows=1, usecols=(1), unpack=True, delimiter=',')
+SFRSag = StarFRSag - 9 #* np.log10(10) = 1 #Msun h^-1 yr^-1
+#print(StarFRSag)
+#print('frecuencias = {}'.format(SFRSag))
+
 dexObs = StarFR_high - StarFR_low
 dexGala = 0.1
 dexSage = 0.1
@@ -46,12 +53,17 @@ freqSage = freqSage/(volumen*dexSage)
 ftotSage = np.log10(freqSage, where = 0 < freqSage)
 #print(ftotSage)
 
+freqSag = np.loadtxt(fileSag, skiprows=1, usecols=(2), unpack=True, delimiter=',')
+freqSag = freqSag/(volumen*dexSag)
+ftotSag = np.log10(freqSag, where = 0 < freqSag)
+#print(ftotSag)
 
 
 plt.xlabel('$Log_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
 plt.ylabel('$Log_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
-plt.title('Histograma SFR Galacticus vs SAGE vs Observacional')
+plt.title('Histograma SFR Galacticus vs SAGE vs SAG vs Observacional')
 plt.xlim(-0.5,2.5)
+#plt.xlim(-10,2.5)
 
 plt.plot(ghistObs, freqObs, 'b', marker = 'o', linewidth=0, label ='Obs 0.0< z < 0.3')
 plt.errorbar(ghistObs, freqObs, yerr=errorObs, xerr=None, fmt = '.b')
@@ -59,8 +71,9 @@ indGala = np.where(ftotGala < 0)
 plt.plot(SFRGala[indGala], ftotGala[indGala], 'g', label='Galacticus z = 0')
 indSage = np.where(ftotSage < 0)
 plt.plot(SFRSage[indSage], ftotSage[indSage], 'r', label='SAGE z = 0')
-
+indSag = np.where(ftotSag < 0)
+plt.plot(SFRSag[indSag], ftotSag[indSag], 'y', label='SAG z = 0')
 
 plt.legend()
-plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/Obs_Galacticus_Sage_allgalaxies_z_0.png')
+plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/Obs_Galacticus_Sage_Sag_allgalaxies_z_0.png')
 plt.show()
