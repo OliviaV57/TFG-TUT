@@ -25,7 +25,7 @@ for iiz, zsim in enumerate(zsims):
 
         plt.xlabel('$Log_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
         plt.ylabel('$Log_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
-        plt.title('Histograma todos los redshifts SAGE')
+        plt.title('Función SFR todos los redshifts SAGE')
         plt.xlim(-0.5, 4)
 
         indSim = np.where(ftotSim < 0)

@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os.path
 import sys
 
 '''Parámetros de la simulación'''
@@ -34,6 +35,10 @@ for iiz, zob in enumerate(zobs):
 
     for sim in simnom:
         ffsim = 'C:/Users/Olivia/TFG-TUT/Datos_simulaciones/histograma_'+sim+'_z_'+zsims[iiz]+'.csv'
+
+        if not os.path.isfile(ffsim):
+            continue
+
         #print(ffsim)
         #dataSim = np.loadtxt(ffsim, dtype=str, unpack=True)  # dtype str para poder leer palabras también.
         StarFRSim = np.loadtxt(ffsim, skiprows=2, usecols=(1), unpack=True, delimiter=',')
@@ -51,7 +56,7 @@ for iiz, zob in enumerate(zobs):
         # para cada z una gráfica:
         plt.xlabel('$Log_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
         plt.ylabel('$Log_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
-        plt.title('Histograma SFR Galacticus vs SAGE vs SAG vs Observacional')
+        plt.title('Función SFR SAGE vs Observacional')
         plt.xlim(-0.5, 4)
 
         plt.plot(ghistObs, freqObs, 'b', marker='o', linewidth=0, label='Obs z = ' + zob + '')
@@ -62,7 +67,7 @@ for iiz, zob in enumerate(zobs):
 
 
     plt.legend()
-    plotnom = 'C:/Users/Olivia/TFG-TUT/Figuras/Obs_Galacticus_Sage_Sag_allgalaxies_z_' + zsims[iiz] + '.png'
+    plotnom = 'C:/Users/Olivia/TFG-TUT/Figuras/Obs_Sage_allgalaxies_z_' + zsims[iiz] + '.png'
     # print(plotnom)
     plt.savefig(plotnom)
 

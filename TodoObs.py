@@ -5,7 +5,7 @@ import sys
 '''Parámetros de la observación'''
 h = 0.71
 zobs = ['0.0-0.3', '0.45-0.6', '1.0-1.2','2.0-2.5', '3.0-4.2']
-
+color = ['b', 'y', 'g', 'r', 'm']
 for iiz, zob in enumerate(zobs):
     # print(iiz, zob)
 
@@ -21,11 +21,11 @@ for iiz, zob in enumerate(zobs):
 
     plt.xlabel('$Log_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
     plt.ylabel('$Log_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
-    plt.title('Histograma todos los redshifts Observaciones')
+    plt.title('Función SFR todos los redshifts Observaciones')
     plt.xlim(-0.5, 4)
 
-    plt.plot(ghistObs, freqObs, marker='o', linewidth=0, label='Obs z = ' + zob + '')
-    #plt.errorbar(ghistObs, freqObs, yerr=errorObs, xerr=None, fmt='.b')
+    #plt.plot(ghistObs, freqObs, marker = 'o', linewidth=0.2, label='Obs z = ' + zob + '')
+    plt.errorbar(ghistObs, freqObs, yerr=errorObs, xerr=None, elinewidth=0.9, fmt='o--', label='Obs z = ' + zob + '')
 
 plt.legend()
 plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/Obs_todosZ.png')
