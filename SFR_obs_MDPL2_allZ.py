@@ -16,7 +16,7 @@ dexSim = 0.1
 # Creo unos arrays con todos los z para automatizarlo:
 
 zobs = ['0.0-0.3', '0.45-0.6', '1.0-1.2','2.0-2.5', '3.0-4.2']
-zsims = ['0,142', '0,523', '1,077', '2,235', '3,61']
+zsims = ['0.142', '0.523', '1.077', '2.235', '3.61']
 simnom = ['SAGE']
 #simnom = ['Galacticus', 'Sage', 'Sag']
 

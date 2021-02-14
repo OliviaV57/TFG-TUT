@@ -47,7 +47,7 @@ plt.title('Histograma SFR Galacticus')
 ind = np.where(ftot<0)
 
 plt.plot(ghist[ind], ftot[ind]) #Los puntos donde la frecuencia es 0 no la pinta.
-plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/histo_SFR_Galacticus.png')
+#plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/histo_SFR_Galacticus.png')
 plt.show()
 
 
