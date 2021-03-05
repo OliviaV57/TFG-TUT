@@ -17,8 +17,8 @@ dexSim = 0.1
 
 zobs = ['0.0-0.3', '0.45-0.6', '1.0-1.2','2.0-2.5', '3.0-4.2']
 zsims = ['0.142', '0.523', '1.077', '2.235', '3.61']
-simnom = ['SAGE']
-#simnom = ['Galacticus', 'Sage', 'Sag']
+simnom = ['SAGE', 'Galacticus']
+cm = plt.get_cmap('tab10') # Colour map to draw colours from
 
 for iiz, zob in enumerate(zobs):
     # print(iiz, zob)
@@ -33,12 +33,14 @@ for iiz, zob in enumerate(zobs):
     dexObs = SFRobs_High - SFRobs_Low
     ghistObs = SFRobs_High - 0.5 * dexObs
 
-    for sim in simnom:
+    for iis, sim in enumerate(simnom):
         ffsim = 'C:/Users/Olivia/TFG-TUT/Datos_simulaciones/histograma_'+sim+'_z_'+zsims[iiz]+'.csv'
 
         if not os.path.isfile(ffsim):
             continue
-
+        cols = []
+        col = cm(1.*iis/len(simnom))
+        cols.append(col)
         #print(ffsim)
         #dataSim = np.loadtxt(ffsim, dtype=str, unpack=True)  # dtype str para poder leer palabras también.
         StarFRSim = np.loadtxt(ffsim, skiprows=2, usecols=(1), unpack=True, delimiter=',')
@@ -50,7 +52,7 @@ for iiz, zob in enumerate(zobs):
 
 
         figure = 'redshift = ' + zsims[iiz] + ''
-        print(figure)
+        # print(figure)
         plt.figure(figure)
 
         # para cada z una gráfica:
@@ -59,12 +61,12 @@ for iiz, zob in enumerate(zobs):
         plt.title('Función SFR SAGE vs Observacional')
         plt.xlim(-0.5, 4)
 
-        plt.plot(ghistObs, freqObs, 'b', marker='o', linewidth=0, label='Obs z = ' + zob + '')
-        plt.errorbar(ghistObs, freqObs, yerr=errorObs, xerr=None, fmt='.b')
-
         indSim = np.where(ftotSim < 0)
-        plt.plot(SFRSim[indSim], ftotSim[indSim], 'r', label= ''+sim+' z = '+zsims[iiz]+'')
+        #axp.plot(kg,pkg,color = col, )
+        plt.plot(SFRSim[indSim], ftotSim[indSim], color = col, label= ''+sim+' z = '+zsims[iiz]+'')
 
+    plt.plot(ghistObs, freqObs, 'k', marker='o', linewidth=0, label='Obs z = ' + zob + '')
+    plt.errorbar(ghistObs, freqObs, yerr=errorObs, xerr=None, fmt='.k')
 
     plt.legend()
     plotnom = 'C:/Users/Olivia/TFG-TUT/Figuras/Obs_Sage_allgalaxies_z_' + zsims[iiz] + '.png'
