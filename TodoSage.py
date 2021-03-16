@@ -8,7 +8,7 @@ volumen = 1000**3 #(Mpc/h)^3
 '''Constantes'''
 dexSim = 0.1
 
-zsims = ['0.142', '0.523', '1.077', '2.235', '3.61']
+zsims = ['0.142', '0.523', '1.077', '2.235', '3.61', '4.038','5.017']
 simnom = ['SAGE']
 
 for iiz, zsim in enumerate(zsims):
