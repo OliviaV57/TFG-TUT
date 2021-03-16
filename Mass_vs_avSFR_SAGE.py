@@ -92,7 +92,7 @@ for iiz in range(len(zsims)):
     print(errormedias)
 
     plt.plot(ghist, medias, marker='.', color=col, linewidth=0, label='SAGE z = ' + zsims[iiz] + '')
-    # plt.errorbar(ghist, medias, yerr=errormedias, xerr=None, fmt='.', ecolor=None)
+    plt.errorbar(ghist, medias, yerr=errormedias, xerr=None, fmt='.', ecolor=None)
     plt.ylabel('$Log_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
     plt.xlabel('$Log_{10} \; (Masa \; [M_{\odot} \; h^{-1} $])')
     plt.title('Media de la función SFR SAGE frente bines de masa de las galaxias')
