@@ -53,7 +53,7 @@ for iiz in range(len(zsims)):
     '''Empezamos a leer linea a linea'''
     ff = open(ffsim, 'r')
     iline = -1  # Para que en el bucle empiece en el 0
-    #print(ff)
+
 
     for line in ff:
         iline += 1  # Cuenta las lineas que ya hay en el fichero. Quizá no haría falta ya que el fichero ya las tiene
@@ -88,7 +88,8 @@ for iiz in range(len(zsims)):
         # Aquí llegan todas las SFR
 
     # OJO
-    # Una vez leído todo el fichero calculamos las MEDIAS con los números totales en cada bin. Hay que leer todo
+    #Una vez
+    # Una vez leído el fichero calculamos las MEDIAS con los números totales en cada bin. Hay que leer
     # el fichero y por eso salir del loop del fichero.
     for ie, edge in enumerate(gedges[:-1]):
         if ngal[ie] > 1:
@@ -97,8 +98,10 @@ for iiz in range(len(zsims)):
 
     # OJO
     # Segunda lectura del fichero para calcular los errores
-    for line in ff:
 
+
+    for line in ff:
+        print(ffsim)
         iline += 1
         char1 = line[0]  # Primer caracter de la linea 1.
 
@@ -107,7 +110,7 @@ for iiz in range(len(zsims)):
 
 
         if test and iline > n:
-            continue    #He puesto un continue, porque con el break se paraba el código aquí, sin embargo arriba
+            break    #He puesto un continue, porque con el break se paraba el código aquí, sin embargo arriba
                         # funciona con el break, no entiendo por qué. Sigo, dejando uno de cada a ver qué pasa.
 
 
