@@ -19,14 +19,14 @@ for iiz, zob in enumerate(zobs):
     dexObs = SFRobs_High - SFRobs_Low
     ghistObs = SFRobs_High - 0.5 * dexObs
 
-    plt.xlabel('$Log_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
-    plt.ylabel('$Log_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
-    plt.title('Función SFR todos los redshifts Observaciones')
-    plt.xlim(-0.5, 4)
+    plt.xlabel('log$_{10} \;$(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
+    plt.ylabel('log$_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
+    #plt.title('Función SFR todos los redshifts Observaciones')
+    plt.xlim(-0.5, 3.5)
 
     #plt.plot(ghistObs, freqObs, marker = 'o', linewidth=0.2, label='Obs z = ' + zob + '')
     plt.errorbar(ghistObs, freqObs, yerr=errorObs, xerr=None, elinewidth=0.9, fmt='o--', label='Obs z = ' + zob + '')
 
 plt.legend()
-plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/Obs_todosZ.png')
+plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/Definitivas/Obs_todosZ.png')
 plt.show()

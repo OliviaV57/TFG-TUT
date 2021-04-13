@@ -23,15 +23,15 @@ for iiz, zsim in enumerate(zsims):
         freqSim = freqSim / (volumen * dexSim)
         ftotSim = np.log10(freqSim, where=0 < freqSim)
 
-        plt.xlabel('$Log_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
-        plt.ylabel('$Log_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
-        plt.title('Función SFR todos los redshifts SAGE')
-        plt.xlim(-0.5, 4)
+        plt.xlabel('log$_{10} \;$(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
+        plt.ylabel('log$_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
+        #plt.title('Función SFR todos los redshifts SAGE')
+        plt.xlim(-0.5, 3.5)
 
         indSim = np.where(ftotSim < 0)
         plt.plot(SFRSim[indSim], ftotSim[indSim], label= ''+sim+' z = '+zsim+'')
 
 
 plt.legend()
-plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/SAGE_todosZ.png')
+plt.savefig('C:/Users/Olivia/TFG-TUT/Figuras/Definitivas/SAGE_todosZ.png')
 plt.show()

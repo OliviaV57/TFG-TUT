@@ -56,10 +56,10 @@ for iiz, zob in enumerate(zobs):
         plt.figure(figure)
 
         # para cada z una gráfica:
-        plt.xlabel('$Log_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
-        plt.ylabel('$Log_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
-        plt.title('Función SFR SAGE vs Observacional')
-        plt.xlim(-0.5, 4)
+        plt.xlabel('log$_{10} \; $(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
+        plt.ylabel('log$_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
+        #plt.title('Función SFR SAGE vs Observacional')
+        plt.xlim(-0.5, 3.5)
 
         indSim = np.where(ftotSim < 0)
         #axp.plot(kg,pkg,color = col, )
@@ -69,7 +69,7 @@ for iiz, zob in enumerate(zobs):
     plt.errorbar(ghistObs, freqObs, yerr=errorObs, xerr=None, fmt='.k')
 
     plt.legend()
-    plotnom = 'C:/Users/Olivia/TFG-TUT/Figuras/Obs_Sage_allgalaxies_z_' + zsims[iiz] + '.png'
+    plotnom = 'C:/Users/Olivia/TFG-TUT/Figuras/Definitivas/Obs_Sage_allgalaxies_z_' + zsims[iiz] + '.png'
     # print(plotnom)
     plt.savefig(plotnom)
 
