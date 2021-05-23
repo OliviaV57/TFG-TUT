@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import Style
 import sys
 
 '''Parámetros de la simulación'''
@@ -23,12 +24,14 @@ for iiz, zsim in enumerate(zsims):
         freqSim = freqSim / (volumen * dexSim)
         ftotSim = np.log10(freqSim, where=0 < freqSim)
 
+        plt.style.use(Style.style1)
         plt.xlabel('log$_{10} \;$(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
         plt.ylabel('log$_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
         #plt.title('Función SFR todos los redshifts SAGE')
         plt.xlim(-0.5, 3.5)
 
         indSim = np.where(ftotSim < 0)
+
         plt.plot(SFRSim[indSim], ftotSim[indSim], label= ''+sim+' z = '+zsim+'')
 
 
