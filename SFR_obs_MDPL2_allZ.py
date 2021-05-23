@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os.path
+import Style
 import sys
 
 '''Parámetros de la simulación'''
@@ -50,7 +51,7 @@ for iiz, zob in enumerate(zobs):
         freqSim = freqSim / (volumen * dexSim)
         ftotSim = np.log10(freqSim, where=0 < freqSim)
 
-
+        plt.style.use(Style.style1)
         figure = 'redshift = ' + zsims[iiz] + ''
         # print(figure)
         plt.figure(figure)
@@ -72,16 +73,6 @@ for iiz, zob in enumerate(zobs):
     plotnom = 'C:/Users/Olivia/TFG-TUT/Figuras/Definitivas/Obs_Sage_allgalaxies_z_' + zsims[iiz] + '.png'
     # print(plotnom)
     plt.savefig(plotnom)
-
-
-
-
-
-
-
-
-
-
 
 
 plt.show()
