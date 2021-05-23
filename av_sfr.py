@@ -12,7 +12,7 @@ simnom = ['SAGE']
 cm = plt.get_cmap('tab10')  # Colour map to draw colours from
 
 '''True o False si estoy haciendo un test o el programa entero'''
-test = True
+test = False
 ntest = 1000
 
 '''Hago los bines de masa'''
