@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import Style
 import sys
 
 '''Parámetros de la observación'''
@@ -19,6 +20,7 @@ for iiz, zob in enumerate(zobs):
     dexObs = SFRobs_High - SFRobs_Low
     ghistObs = SFRobs_High - 0.5 * dexObs
 
+    plt.style.use(Style.style1)
     plt.xlabel('log$_{10} \;$(SFR $[M_{\odot} \; h^{-1}\; yr^{-1}$])')
     plt.ylabel('log$_{10} \; (\phi \; [h^3 \; Mpc ^{-3} \; dex^{-1}$])')
     #plt.title('Función SFR todos los redshifts Observaciones')
