@@ -19,4 +19,4 @@ Dibujo_Medias_SFR_M.py dibuja las medias calculadas por Medias_SFR_M.py  frente 
 
 - style.py define el estilo de las gráficas.
 
-El resto de códigos que no están mencionados aquí son pruebas que se han ido realizando para aprender a usar el lenguaje de programación, a manejar los datos de la base de datos y aprender el uso de GitHub.
+El resto de códigos que no están mencionados aquí son pruebas que se han ido realizando para aprender a usar el lenguaje de programación Python, aprender a manejar los datos de la base de datos y aprender el uso de GitHub.
